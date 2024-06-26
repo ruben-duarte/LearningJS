@@ -1,11 +1,12 @@
 function longestWord(phrase){
-    let maxLength = 0;
-    for (let word of phrase){
-        if (word.length > maxLength){
-            maxLength = word.length;
+    let words = phrase.split(" ");
+    let maxLength = ""; // O(1)
+    for (let word of words){
+        if (word.length > maxLength.length){ // O(n)
+            maxLength = word;
         }
     }
-    return maxLength;
+    return maxLength; // O(1)
 }
 
 let test = longestWord('Hola mundo mango mandarina')
