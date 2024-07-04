@@ -24,7 +24,7 @@ parkingCar.shift();
 // loop through array
 
 for ( let i = 0; i < parkingCar.length; i++ ) {
-console.log(parkingCar[i]);
+    console.log(parkingCar[i]);
 }
 
 let i = parkingCar.length;
