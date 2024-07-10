@@ -27,6 +27,34 @@ for ( let i = 0; i < parkingCar.length; i++ ) {
     console.log(parkingCar[i]);
 }
 
+// for of se utiliza para iterar sobre iterables (arrays, strings, mapas, sets, etc.). No da acceso al índice, solo al valor de cada elemento.
+for ( const cars of parkingCar ) {
+    console.log(cars);
+}
+
+const str = "hello";
+for ( const char of str ) {
+  console.log(char);
+}
+
+// for in  Iterar sobre las propiedades de un objeto
+const obj = { a: 1, b: 2, c: 3 };
+for (const propiedad in obj) {
+  console.log(propiedad, obj[propiedad]);
+}
+
+// foreach solo para arrays
+const arreglo = [1, 2, 3, 4, 5];
+arr.forEach((elemento, índice) => {
+  console.log(`Elemento: ${elemento}, Índice: ${índice}`);
+});
+
+/*for clásico: Ideal cuando necesitas acceder al índice del array o cuando necesitas modificar el índice de manera controlada.
+for...of: Perfecto para iterar sobre valores de arrays, strings, mapas y sets. No se utiliza para objetos porque solo itera sobre valores.
+for...in: Se usa principalmente para iterar sobre las propiedades de un objeto. No es recomendado para iterar sobre arrays ya que itera sobre todas las propiedades enumerables, no solo las propiedades indexadas.
+forEach: Conveniente para arrays cuando no necesitas salir del bucle prematuramente (no se puede usar break o continue dentro de forEach). */
+
+
 let i = parkingCar.length;
 while ( i > 0 ) {
     console.log(parkingCar[i-1]);
@@ -90,7 +118,7 @@ const newArray2 = nums1.concat(nums2,nums1); // new array
 const somePart = nums1.slice(0,2);
 const lastPart = nums1.slice(-1);
 
-// splice  removes and adds if necessary (start index, how many deletions)
+// splice : empalme  removes and adds if necessary (start index, how many deletions)
 
 let fruits = ["cherry", "badea"];
 fruits.unshift("borojó");
