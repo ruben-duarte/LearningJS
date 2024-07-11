@@ -18,7 +18,7 @@ function longestWord(phrase) {
     let words = phrase.split(" "); //O(1)
     let maxLength = 0; //O(1)
 
-    for (let i = 0; i < words.length -1 ; i++) {  
+    for (let i = 0; i < words.length - 1 ; i++) {  
         if (words[i].length > words[i+1].length) {  //O(n)
             maxLength = words[i].length 
         } else {

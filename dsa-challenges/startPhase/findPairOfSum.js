@@ -18,7 +18,7 @@ Output: Pair not found
 
 //Empty array to save pairs
 const numberPairs = [];
-const nums = [8, 7, 2, 6, 4, 5, 3, 1]
+const nums = [8, 5, 2, 6, 4, 5, 4, 1]
 let target = 10;
 debugger
 //Add one number with the rest of the numbers and repeat until ends array
