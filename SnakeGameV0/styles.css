@@ -1,0 +1,51 @@
+* {
+  font-family: "Cutive Mono", monospace;
+  font-weight: 400;
+  color: #69b578;
+}
+
+body {
+  background-color: #254d32;
+}
+
+#board {
+  border: 1px solid #181d27;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.board-info {
+  border: 1px solid #181d27;
+  font-size: 28px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+button {
+  font-size: 40px;
+}
+
+#game-over {
+  border: 1px solid #181d27;
+  display: none;
+}
+
+#score-board {
+  display: inline-flex;
+}
+
+.square {
+  aspect-ratio: 1;
+}
+
+.emptySquare {
+  background-color: #3E517A;
+}
+
+.snakeSquare {
+  background-color: #70cad1;
+}
+
+.foodSquare {
+  background-color: #a8e0ff;
+}
