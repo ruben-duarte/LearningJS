@@ -23,6 +23,7 @@ body {
 
 button {
   font-size: 40px;
+  cursor: pointer;
 }
 
 #game-over {
