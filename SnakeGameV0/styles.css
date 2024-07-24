@@ -5,12 +5,14 @@
 }
 
 body {
-  background-color: #254d32;
+  background-color: #1eaf4e;
 }
 
 #board {
+  display: grid;//importante para que funcione bien
   border: 1px solid #181d27;
   grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
 }
 
 .board-info {
@@ -19,6 +21,12 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  color: #d0e9f7;
+}
+
+.label {
+  color: #a8e0ff;
+  margin-top: 8px;
 }
 
 button {
@@ -41,12 +49,13 @@ button {
 
 .emptySquare {
   background-color: #3E517A;
+  border: 2px solid #181d27;
 }
 
 .snakeSquare {
-  background-color: #70cad1;
+  background-color: #50dd34;
 }
 
 .foodSquare {
-  background-color: #a8e0ff;
+  background-color: #12a5f5;
 }
