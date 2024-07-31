@@ -37,6 +37,7 @@ button {
 #game-over {
   border: 1px solid #181d27;
   display: none;
+  font-size: 45px;
 }
 
 #score-board {

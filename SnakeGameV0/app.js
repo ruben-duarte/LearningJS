@@ -6,7 +6,7 @@ const gameOver = document.getElementById('game-over');
 
 // Game config settings
 const boardSize = 10;
-const gameSpeed = 180;
+const gameSpeed = 400;
 const squareTypes = {
   emptySquare: 0,
   snakeSquare: 1,
