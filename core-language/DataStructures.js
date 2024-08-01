@@ -51,12 +51,44 @@ ids.has('hola');
 ids.delete(2);
 console.log(ids);
 
-
+// ========Objects
 // Key value pairs of Data - Unordered allowed
+// unOrdered key value pair, element access via key, not iterable only with for in
+// keys are unique, values are not
+// Keys have to be strings or symbols, construct data+methods
+console.log('==objects')
+
 let myObject = {
   name : 'Miyagi',
   age : 20
 };
+
+let user = {
+  name: 'Akira',
+  age: 22,
+  greet() {
+    console.log("Hi, I'm" + this.name);
+  }
+};
+
+let person = { 
+  firstName: 'John',
+  age: 33,
+  hobbies: ['reading', 'tenis'],
+  greet() {
+    console.log('Hi I am ' + this.firstName + ' ' + this.lastName);
+  }
+
+};
+
+console.log(person['firstName']);
+console.log(person.age);
+person.lastName = 'Suarez';
+console.log(person);
+delete person.hobbies;
+console.log(person);
+person.greet();
+
 
 // Key value pairs of Data - Ordered  and iterable allowed
 let myMap = new Map();
