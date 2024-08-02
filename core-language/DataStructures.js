@@ -9,9 +9,11 @@
 // ==============ArrAYS
 console.log('==arrays')
 let myArray = [ 1, 5, 7, 9];
-myArray[3]; // insertion order is kept, access via index
+myArray[3]; 
+// insertion order is kept, access via index, iterable
 //size dinamically adjust, duplicates allowed, mix types ok
 //deletion - finding / search extra work
+
 const names = ['volkswagen', 'toyota'];
 names[1];
 names.length;
@@ -93,8 +95,46 @@ person.greet();
 // Key value pairs of Data - Ordered  and iterable allowed
 let myMap = new Map();
 myMap.set('hello', 'world');
+// key value pairs ordered , acces via key, iterable
+// Keys are unique values are not, keys can by anything
+//pure data storage, optimized for data access
 
+const resultData = new Map();
+resultData.set('Math', 5.0);
+resultData.set('German', null);
+                //key    value
+const germany = { name: 'Germany', population:500 };
+resultData.set(germany, 0.90);
+console.log('======> Map')
+
+for (const el of resultData) {
+  console.log(el);
+}
+
+console.log("===== array set object map")
 console.log(myArray, mySet, myObject, myMap)
 
-// Custom dataStructures are build by the user
+//WeakSet weakMap
+//values and keys are only weakly referenced, garbage collection can delete values and keys if not used anywhere
 
+// Custom dataStructures are build by the user
+// linked List
+
+//every element knows about the next element, efficient resizing and insertion
+
+console.log('=======LinkedList')
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+
+  append(value) {
+    const newNode = { value: value, next: null };
+    if ( this.tail ) {
+      this.tail.next = newNode; //newNode is stored in the next propierty of the previous last node
+    }
+    this.tail = newNode;
+  }
+}
