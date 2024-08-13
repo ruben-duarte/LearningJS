@@ -22,11 +22,17 @@ function update() {
   coordinateY += speedY;
   box.fillText('H', coordinateX, coordinateY)
   if (coordinateX > 500) {
-    coordinateX = 50;
-    coordinateY = 50;
+    console.log("out of bounds");
+    speedX = -30;
+  } else if (coordinateX < 0) {
+    speedX = 30;
+  } else if (coordinateY > 500) {
+    speedY = -5;
+  } else if (coordinateY < 0) {
+    speedy = 5;
   }
 }
 
-setInterval(update, 500);
+setInterval(update, 40); // 40 ms equals 25 frames per second
 
 

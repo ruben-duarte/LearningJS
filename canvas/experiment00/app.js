@@ -18,6 +18,12 @@ function update(){
   x += speedInX;
   y += speedInY;
   myCanva.fillText('mundo',x,y)
+  if ( y > 400 ) {
+    console.log("out of bounds");
+    x = 50;
+    y -= 300;
+    myCanva.fillText('mundo',x,y)
+  }
 }
 
 setInterval(update, 500);
