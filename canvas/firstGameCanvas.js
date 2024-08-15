@@ -18,44 +18,55 @@ let WIDTH = 500;
 let message = "Bouncing"
 
 //player
-let coordinateX = 50;
-let speedX = 30;
-let coordinateY = 40;
-let speedY = 5;
-let symbol = 'H';
+const player = {
+  coordinateX : 50,
+  speedX : 30,
+  coordinateY : 40,
+  speedY : 5,
+  symbol :'H'
+};
 
 //enemy
-let enemy_coordinateX = 150;
-let enemy_speedX = 10;
-let enemy_coordinateY = 340;
-let enemy_speedY = 15;
-let enemy_symbol = 'E';
+const enemy = {
+ enemy_coordinateX : 150,
+ enemy_speedX : 10,
+ enemy_coordinateY : 340,
+ enemy_speedY : 15,
+ enemy_symbol : 'E'
+};
 
+function updatePlayer() {
+ //player
+ player.coordinateX += player.speedX;
+ player.coordinateY += player.speedY;
+ box.fillText(player.symbol, player.coordinateX, player.coordinateY)
+ if ( player.oordinateX < 0 || player.coordinateX > WIDTH ) {
+   console.log(message);
+   player.speedX = -player.speedX;
+ } else if ( player.coordinateY < 0 ||player.coordinateY > HEIGHT ) {
+   console.log(message);
+   player.speedY = -player.speedY;
+ } 
+}
+
+function updateEnemy() {
+ //enemy
+ enemy.enemy_coordinateX += enemy.enemy_speedX;
+ enemy.enemy_coordinateY += enemy.enemy_speedY;
+ box.fillText(enemy.enemy_symbol, enemy.enemy_coordinateX, enemy.enemy_coordinateY)
+ if ( enemy.enemy_coordinateX < 0 || enemy.enemy_coordinateX > WIDTH ) {
+   console.log(message);
+   enemy.enemy_speedX = -enemy.enemy_speedX;
+ } else if ( enemy.enemy_coordinateY < 0 || enemy.enemy_coordinateY > HEIGHT ) {
+   console.log(message);
+   enemy.enemy_speedY = -enemy.enemy_speedY;
+ } 
+}
 
 function update() {
-  //player
-  coordinateX += speedX;
-  coordinateY += speedY;
-  box.fillText(symbol, coordinateX, coordinateY)
-  if ( coordinateX < 0 || coordinateX > WIDTH ) {
-    console.log(message);
-    speedX = -speedX;
-  } else if ( coordinateY < 0 || coordinateY > HEIGHT ) {
-    console.log(message);
-    speedY = -speedY;
-  } 
-
-  //enemy
-  enemy_coordinateX += enemy_speedX;
-  enemy_coordinateY += enemy_speedY;
-  box.fillText(enemy_symbol, enemy_coordinateX, enemy_coordinateY)
-  if ( enemy_coordinateX < 0 || enemy_coordinateX > WIDTH ) {
-    console.log(message);
-    enemy_speedX = -enemy_speedX;
-  } else if ( enemy_coordinateY < 0 || enemy_coordinateY > HEIGHT ) {
-    console.log(message);
-    enemy_speedY = -enemy_speedY;
-  } 
+  updatePlayer();
+  updateEnemy();
+ 
 }
 
 setInterval(update, 40); // 40 ms equals 25 frames per second
