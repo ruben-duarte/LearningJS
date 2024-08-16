@@ -5,6 +5,7 @@ box.font = '30px Arial';
 let HEIGHT = 500;
 let WIDTH = 500;
 let message = "Bouncing"
+let timeWhenGameStarted = Date.now(); // time in ms
 
 //player
 const player = {
@@ -12,13 +13,14 @@ const player = {
   speedX : 30,
   coordinateY : 40,
   speedY : 5,
-  symbol :'S'
+  symbol :'S',
+  energy : 10
 };
 
 let enemyList = {};
 
 //enemy
-function Enemy(id, coordinateX, coordinateY, speedX, speedY) {
+Enemy = function (id, coordinateX, coordinateY, speedX, speedY) {
   const enemy3 = {
     coordinateX : coordinateX,
     speedX : speedX,
@@ -31,30 +33,40 @@ function Enemy(id, coordinateX, coordinateY, speedX, speedY) {
   enemyList[id] = enemy3;
 }
 
-Enemy('E1',150, 340, 10, 15)
-Enemy('E2',230, 10, 23, 10)
-Enemy('E3',250, 340, 10, 7)
+
 
 //player : point (coordinateX,coordinateY);
 //enemy : point (coordinateX,coordinateY);
 
-function getDistanceBetweenEntity(entity1, entity2) {
+getDistanceBetweenEntity = function (entity1, entity2) {
   let deltaX = entity1.coordinateX - entity2.coordinateX;
   let deltaY = entity1.coordinateY - entity2.coordinateY;
   return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
 }
 
-function testCollisionEntity(entity1, entity2) {
+testCollisionEntity = function (entity1, entity2) {
   let distance = getDistanceBetweenEntity(entity1, entity2);
   return distance < 30;
 }
 
-setInterval(update, 40); // 40 ms equals 25 frames per second
+document.onmousemove = function(mouse) {
+  let mouseX = mouse.clientX;
+  let mouseY = mouse.clientY;
+  player.coordinateX = mouseX;
+  player.coordinateY = mouseY;
+}
 
-function updateEntity(gameCharacter){
+
+
+updateEntity = function (gameCharacter){
+  updateEntityPosition(gameCharacter);
+  drawEntity(gameCharacter);
+ }
+
+updateEntityPosition = function (gameCharacter) {
   gameCharacter.coordinateX += gameCharacter.speedX;
   gameCharacter.coordinateY += gameCharacter.speedY;
-  box.fillText(gameCharacter.symbol, gameCharacter.coordinateX, gameCharacter.coordinateY)
+ 
 
   if ( gameCharacter.coordinateX < 0 || gameCharacter.coordinateX > WIDTH ) {
    // console.log(message);
@@ -65,7 +77,11 @@ function updateEntity(gameCharacter){
   } 
  }
 
-function update() {
+drawEntity = function(gameCharacter){
+  box.fillText(gameCharacter.symbol, gameCharacter.coordinateX, gameCharacter.coordinateY);
+ }
+
+update = function () {
   box.clearRect(0,0,WIDTH,HEIGHT);
   
   for ( let enemy in enemyList ) {
@@ -73,15 +89,25 @@ function update() {
 
     let isColliding = testCollisionEntity(player, enemyList[enemy]);
     if (isColliding) {
-      console.log('Colliding');
+      //console.log('Colliding');
+      player.energy -= 1;
+      if ( player.energy <= 0 ) {
+        let timeSurvived = Date.now() - timeWhenGameStarted;
+        console.log(`game over you survived ${timeSurvived} ms`);
+        timeWhenGameStarted = Date.now();
+        player.energy = 10;
+      }
     }
 
   }
 
-  updateEntity(player);
+  drawEntity(player);
+  box.fillText(player.energy + ' energy level',0,30);
  
 }
 
+Enemy('E1',150, 340, 10, 15)
+Enemy('E2',230, 10, 23, 10)
+Enemy('E3',250, 340, 10, 7)
 
-
-
+setInterval(update, 40); // 40 ms equals 25 frames per second
