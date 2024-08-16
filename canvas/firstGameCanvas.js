@@ -12,25 +12,42 @@ const player = {
   speedX : 30,
   coordinateY : 40,
   speedY : 5,
-  symbol :'H'
+  symbol :'S'
 };
 
+let enemyList = {};
+
 //enemy
-const enemy = {
+const enemy1 = {
  coordinateX : 150,
  speedX : 10,
  coordinateY : 340,
  speedY : 15,
- symbol : 'E'
+ symbol : 'P'
 };
 
-const player2 = {
+enemyList['E1'] = enemy1;
+
+const enemy2 = {
   coordinateX : 230,
   speedX : 20,
   coordinateY : 10,
   speedY : 5,
-  symbol :'F'
+  symbol :'L'
 };
+
+enemyList['E2'] = enemy2;
+
+const enemy3 = {
+  coordinateX : 230,
+  speedX : 20,
+  coordinateY : 170,
+  speedY : 5,
+  symbol :'*'
+};
+
+enemyList['E3'] = enemy3;
+
 
 setInterval(update, 40); // 40 ms equals 25 frames per second
 
@@ -49,9 +66,12 @@ function updateEntity(gameCharacter){
  }
 
 function update() {
+  box.clearRect(0,0,WIDTH,HEIGHT);
   updateEntity(player);
-  updateEntity(enemy);
-  updateEntity(player2);
+  
+  for ( let enemy in enemyList ) {
+    updateEntity(enemyList[enemy]);
+  }
  
 }
 
