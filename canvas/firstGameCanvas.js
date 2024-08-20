@@ -13,7 +13,7 @@ const player = {
   speedX : 30,
   coordinateY : 40,
   speedY : 5,
-  symbol :'S',
+  symbol :'O',
   energy : 10
 };
 
@@ -26,7 +26,7 @@ Enemy = function (id, coordinateX, coordinateY, speedX, speedY) {
     speedX : speedX,
     coordinateY : coordinateY,
     speedY : speedY,
-    symbol :'*',
+    symbol :'✈',
     id : id
 
   };
@@ -45,8 +45,20 @@ getDistanceBetweenEntity = function (entity1, entity2) {
 }
 
 testCollisionEntity = function (entity1, entity2) {
-  let distance = getDistanceBetweenEntity(entity1, entity2);
-  return distance < 30;
+  let rect1 = {
+    coordinateX : entity1.coordinateX - 15,
+    coordinateY : entity1.coordinateY - 15,
+    width : 30,
+    height : 30
+  }
+  let rect2 = {
+    coordinateX : entity2.coordinateX - 20,
+    coordinateY : entity2.coordinateY - 20,
+    width : 40,
+    height : 40
+  }
+
+  return testCollisionRectangles(rect1, rect2)
 }
 
 document.onmousemove = function(mouse) {
@@ -60,7 +72,7 @@ document.onmousemove = function(mouse) {
 
 updateEntity = function (gameCharacter){
   updateEntityPosition(gameCharacter);
-  drawEntity(gameCharacter);
+  drawEnemy(gameCharacter);
  }
 
 updateEntityPosition = function (gameCharacter) {
@@ -77,8 +89,25 @@ updateEntityPosition = function (gameCharacter) {
   } 
  }
 
-drawEntity = function(gameCharacter){
-  box.fillText(gameCharacter.symbol, gameCharacter.coordinateX, gameCharacter.coordinateY);
+testCollisionRectangles = function(rect1, rect2) {
+  return rect1.coordinateX <= rect2.coordinateX + rect2.width
+      && rect2.coordinateX <= rect1.coordinateX + rect1.width
+      && rect1.coordinateY <= rect2.coordinateY + rect2.height
+      && rect2.coordinateY <= rect1.coordinateY + rect1.height
+}
+
+
+drawPlayer = function(gameCharacter){
+  box.fillStyle = 'green';
+  box.fillRect(gameCharacter.coordinateX - 15, gameCharacter.coordinateY - 15, 30, 30);
+  box.fillStyle = 'black';
+ }
+
+drawEnemy = function(gameCharacter){
+  box.save();
+  box.fillStyle = 'orange';
+  box.fillRect(gameCharacter.coordinateX - 20, gameCharacter.coordinateY - 20, 40, 40);
+  box.restore();
  }
 
 update = function () {
@@ -101,7 +130,7 @@ update = function () {
 
   }
 
-  drawEntity(player);
+  drawPlayer(player);
   box.fillText(player.energy + ' energy level',0,30);
  
 }
