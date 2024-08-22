@@ -98,14 +98,14 @@ testCollisionRectangles = function(rect1, rect2) {
 
 
 drawPlayer = function(gameCharacter){
-  box.fillStyle = 'green';
+  box.fillStyle = '#32de84';
   box.fillRect(gameCharacter.coordinateX - 15, gameCharacter.coordinateY - 15, 30, 30);
   box.fillStyle = 'black';
  }
 
 drawEnemy = function(gameCharacter){
   box.save();
-  box.fillStyle = 'orange';
+  box.fillStyle = '#004953';
   box.fillRect(gameCharacter.coordinateX - 20, gameCharacter.coordinateY - 20, 40, 40);
   box.restore();
  }
@@ -132,6 +132,7 @@ update = function () {
 
   drawPlayer(player);
   box.fillText(player.energy + ' energy level',0,30);
+  
  
 }
 
