@@ -1,5 +1,5 @@
 let box = document.getElementById("box").getContext("2d");
-
+//Link for colors https://coolors.co/03b5aa-037971-023436-00bfb3-049a8f
 box.font = '30px Arial';
 
 let HEIGHT = 500;
@@ -14,26 +14,29 @@ const player = {
   coordinateY : 40,
   speedY : 5,
   symbol :'O',
-  energy : 10
+  energy : 10,
+  width : 20,
+  height : 20,
+  color : '#023436'
 };
 
 let enemyList = {};
 
 //enemy
-Enemy = function (id, coordinateX, coordinateY, speedX, speedY) {
+Enemy = function (id, coordinateX, coordinateY, speedX, speedY, width, height) {
   const enemy3 = {
     coordinateX : coordinateX,
     speedX : speedX,
     coordinateY : coordinateY,
     speedY : speedY,
     symbol :'✈',
-    id : id
-
+    id : id,
+    width: width,
+    height: height,
+    color: '#037971'
   };
   enemyList[id] = enemy3;
 }
-
-
 
 //player : point (coordinateX,coordinateY);
 //enemy : point (coordinateX,coordinateY);
@@ -46,16 +49,16 @@ getDistanceBetweenEntity = function (entity1, entity2) {
 
 testCollisionEntity = function (entity1, entity2) {
   let rect1 = {
-    coordinateX : entity1.coordinateX - 15,
-    coordinateY : entity1.coordinateY - 15,
-    width : 30,
-    height : 30
+    coordinateX : entity1.coordinateX - entity1.width/2,
+    coordinateY : entity1.coordinateY - entity1.height/2,
+    width : entity1.width,
+    height : entity1.height
   }
   let rect2 = {
-    coordinateX : entity2.coordinateX - 20,
-    coordinateY : entity2.coordinateY - 20,
-    width : 40,
-    height : 40
+    coordinateX : entity2.coordinateX - entity2.width/2,
+    coordinateY : entity2.coordinateY - entity2.height/2,
+    width : entity2.width,
+    height : entity2.height
   }
 
   return testCollisionRectangles(rect1, rect2)
@@ -68,11 +71,9 @@ document.onmousemove = function(mouse) {
   player.coordinateY = mouseY;
 }
 
-
-
 updateEntity = function (gameCharacter){
   updateEntityPosition(gameCharacter);
-  drawEnemy(gameCharacter);
+  drawEntity(gameCharacter);
  }
 
 updateEntityPosition = function (gameCharacter) {
@@ -96,17 +97,10 @@ testCollisionRectangles = function(rect1, rect2) {
       && rect2.coordinateY <= rect1.coordinateY + rect1.height
 }
 
-
-drawPlayer = function(gameCharacter){
-  box.fillStyle = '#32de84';
-  box.fillRect(gameCharacter.coordinateX - 15, gameCharacter.coordinateY - 15, 30, 30);
-  box.fillStyle = 'black';
- }
-
-drawEnemy = function(gameCharacter){
+drawEntity = function(gameCharacter){
   box.save();
-  box.fillStyle = '#004953';
-  box.fillRect(gameCharacter.coordinateX - 20, gameCharacter.coordinateY - 20, 40, 40);
+  box.fillStyle = gameCharacter.color;
+  box.fillRect(gameCharacter.coordinateX - gameCharacter.width/2, gameCharacter.coordinateY - gameCharacter.height/2, gameCharacter.width, gameCharacter.height);
   box.restore();
  }
 
@@ -130,14 +124,13 @@ update = function () {
 
   }
 
-  drawPlayer(player);
+  drawEntity(player);
   box.fillText(player.energy + ' energy level',0,30);
-  
- 
+
 }
 
-Enemy('E1',150, 340, 10, 15)
-Enemy('E2',230, 10, 23, 10)
-Enemy('E3',250, 340, 10, 7)
+Enemy('E1',150, 340, 10, 15, 10, 20);
+Enemy('E2',200, 100, 23, 10, 50, 30);
+Enemy('E3',250, 340, 10, 7, 40, 10);
 
 setInterval(update, 40); // 40 ms equals 25 frames per second
