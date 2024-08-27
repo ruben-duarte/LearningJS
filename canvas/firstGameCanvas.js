@@ -7,6 +7,8 @@ let WIDTH = 500;
 let message = "Bouncing"
 let timeWhenGameStarted = Date.now(); // time in ms
 
+let frameCount = 0;
+
 //player
 const player = {
   coordinateX : 50,
@@ -33,7 +35,7 @@ Enemy = function (id, coordinateX, coordinateY, speedX, speedY, width, height) {
     id : id,
     width: width,
     height: height,
-    color: '#037971'
+    color: '#AAAE7F'
   };
   enemyList[id] = enemy3;
 }
@@ -65,8 +67,18 @@ testCollisionEntity = function (entity1, entity2) {
 }
 
 document.onmousemove = function(mouse) {
-  let mouseX = mouse.clientX;
-  let mouseY = mouse.clientY;
+  let mouseX = mouse.clientX - document.getElementById('box').getBoundingClientRect().left;
+  let mouseY = mouse.clientY - document.getElementById('box').getBoundingClientRect().top;
+
+  if(mouseX < player.width/2)
+    mouseX = player.width/2;
+  if(mouseX > WIDTH - player.width/2)
+    mouseX = WIDTH - player.width/2;
+  if(mouseY < player.height/2)
+    mouseY = player.height/2;
+  if(mouseY > HEIGHT - player.height/2)
+    mouseY = HEIGHT - player.width/2;
+
   player.coordinateX = mouseX;
   player.coordinateY = mouseY;
 }
@@ -106,7 +118,11 @@ drawEntity = function(gameCharacter){
 
 update = function () {
   box.clearRect(0,0,WIDTH,HEIGHT);
-  
+  frameCount++;
+
+  if(frameCount % 100 === 0 ) //after 4 sec
+    randomGenerateEnemy();
+
   for ( let enemy in enemyList ) {
     updateEntity(enemyList[enemy]);
 
@@ -114,23 +130,47 @@ update = function () {
     if (isColliding) {
       //console.log('Colliding');
       player.energy -= 1;
-      if ( player.energy <= 0 ) {
-        let timeSurvived = Date.now() - timeWhenGameStarted;
-        console.log(`game over you survived ${timeSurvived} ms`);
-        timeWhenGameStarted = Date.now();
-        player.energy = 10;
-      }
+     
     }
 
   }
 
+  if ( player.energy <= 0 ) {
+    let timeSurvived = Date.now() - timeWhenGameStarted;
+    console.log(`game over you survived ${timeSurvived} ms`);
+    
+    startNewGame();
+  }
   drawEntity(player);
   box.fillText(player.energy + ' energy level',0,30);
-
 }
 
-Enemy('E1',150, 340, 10, 15, 10, 20);
-Enemy('E2',200, 100, 23, 10, 50, 30);
-Enemy('E3',250, 340, 10, 7, 40, 10);
+startNewGame = function(){
+  player.energy = 10;
+  timeWhenGameStarted = Date.now();
+  frameCount = 0;
+  enemyList = {};
+  randomGenerateEnemy();
+  randomGenerateEnemy();
+  randomGenerateEnemy();
+  }
+
+//Enemy('E1',150, 340, 10, 15, 10, 20);
+//Enemy('E2',200, 100, 23, 10, 50, 30);
+//Enemy('E3',250, 340, 10, 7, 40, 10);
+
+randomGenerateEnemy = function() {
+  let x = Math.random()*WIDTH;
+  let y = Math.random()*HEIGHT;
+  let height = 12 + Math.random()*20; //12 to 32
+  let width = 12 + Math.random()*20;
+  let id = Math.random();
+  let speedx = 7 + Math.random()*8;
+  let speedy = 7 + Math.random()*8;
+
+  Enemy(id,x,y,speedx,speedy,width,height);
+}
+
+startNewGame();
 
 setInterval(update, 40); // 40 ms equals 25 frames per second
