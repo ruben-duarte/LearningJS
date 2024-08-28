@@ -8,6 +8,7 @@ let message = "Bouncing"
 let timeWhenGameStarted = Date.now(); // time in ms
 
 let frameCount = 0;
+let score = 0;
 
 //player
 const player = {
@@ -23,6 +24,8 @@ const player = {
 };
 
 let enemyList = {};
+let upgradeList = {};
+let bulletList = {};
 
 //enemy
 Enemy = function (id, coordinateX, coordinateY, speedX, speedY, width, height) {
@@ -38,6 +41,62 @@ Enemy = function (id, coordinateX, coordinateY, speedX, speedY, width, height) {
     color: '#AAAE7F'
   };
   enemyList[id] = enemy3;
+}
+
+Upgrade = function (id, coordinateX, coordinateY, speedX, speedY, width, height) {
+  const upgradeEntity = {
+    coordinateX : coordinateX,
+    speedX : speedX,
+    coordinateY : coordinateY,
+    speedY : speedY,
+    symbol :'✈',
+    id : id,
+    width: width,
+    height: height,
+    color: 'orange'
+  };
+  upgradeList[id] = upgradeEntity;
+}
+
+randomGenerateUpgrade = function() {
+  let x = Math.random()*WIDTH;
+  let y = Math.random()*HEIGHT;
+  let height = 12;
+  let width = 12;
+  let id = Math.random();
+  let speedx = 0;
+  let speedy = 0;
+
+  Upgrade(id,x,y,speedx,speedy,width,height);
+}
+
+Bullet = function (id, coordinateX, coordinateY, speedX, speedY, width, height) {
+  const bulletEntity = {
+    coordinateX : coordinateX,
+    speedX : speedX,
+    coordinateY : coordinateY,
+    speedY : speedY,
+    symbol :'✈',
+    id : id,
+    width: width,
+    height: height,
+    color: 'white'
+  };
+  bulletList[id] = bulletEntity;
+}
+
+randomGenerateBullet = function() {
+  let x = player.coordinateX;
+  let y = player.coordinateY;
+  let height = 10;
+  let width = 10;
+  let id = Math.random();
+
+  let angle = Math.random()*360;
+  let speedx = Math.cos(angle/180*Math.PI)*5;
+  let speedy = Math.sin(angle/180*Math.PI)*5;
+
+  Bullet(id,x,y,speedx,speedy,width,height);
 }
 
 //player : point (coordinateX,coordinateY);
@@ -119,9 +178,29 @@ drawEntity = function(gameCharacter){
 update = function () {
   box.clearRect(0,0,WIDTH,HEIGHT);
   frameCount++;
+  score++;
 
   if(frameCount % 100 === 0 ) //after 4 sec
     randomGenerateEnemy();
+ 
+  if(frameCount % 75 === 0 ) //after 3 sec
+    randomGenerateUpgrade();
+
+  if(frameCount % 225 === 0 ) //after 1 sec
+    randomGenerateBullet();
+
+  for (let key in bulletList) {
+    updateEntity(bulletList[key]);
+  }
+
+  for ( let key in upgradeList) {
+    updateEntity(upgradeList[key]);
+    let isColliding = testCollisionEntity(player, upgradeList[key]);
+    if (isColliding) {
+     score += 1000;
+     delete upgradeList[key];
+    }
+  }
 
   for ( let enemy in enemyList ) {
     updateEntity(enemyList[enemy]);
@@ -142,17 +221,21 @@ update = function () {
     startNewGame();
   }
   drawEntity(player);
-  box.fillText(player.energy + ' energy level',0,30);
+  box.fillText(player.energy + ' energy',0,30);
+  box.fillText('Score' + score,200,30);
 }
 
 startNewGame = function(){
   player.energy = 10;
   timeWhenGameStarted = Date.now();
   frameCount = 0;
+  score = 0;
   enemyList = {};
+  upgradeList = {};
   randomGenerateEnemy();
   randomGenerateEnemy();
   randomGenerateEnemy();
+  
   }
 
 //Enemy('E1',150, 340, 10, 15, 10, 20);

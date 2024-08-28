@@ -136,5 +136,13 @@ class LinkedList {
       this.tail.next = newNode; //newNode is stored in the next propierty of the previous last node
     }
     this.tail = newNode;
+    if (!this.head) {
+      this.head = newNode;
+    }
   }
+
+  toArray() {
+    
+  }
+
 }
